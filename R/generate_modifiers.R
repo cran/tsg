@@ -122,12 +122,11 @@ add_row_total <- function(data, position = c("bottom", "top"), label_total = "To
 #'
 
 add_column_total <- function(data, label_total = "Total", ...) {
-  data <- data |>
-    dplyr::select(dplyr::where(is.numeric)) |>
-    dplyr::mutate(
-      total = rowSums(dplyr::across(dplyr::everything()), na.rm = TRUE),
-      ...
-    )
+  data <- dplyr::mutate(
+    data,
+    total = rowSums(dplyr::across(dplyr::where(is.numeric)), na.rm = TRUE),
+    ...
+  )
 
   attr(data$total, "label") <- label_total
 
@@ -161,14 +160,12 @@ add_footnote <- function(data, footnote, locations = NULL, placement = c("auto",
   if(length(footnote) > 1) stop("Footnote must be a single character string.")
 
   value <- list(
-    text = footnote,
-    locations = locations,
-    placement = placement[1]
+    text = c(attributes(data)$footnotes$text, footnote),
+    locations = c(attributes(data)$footnotes$locations, locations),
+    placement = c(attributes(data)$footnotes$placement, placement[1])
   )
 
-  footnotes <- c(attributes(data)$footnotes, value)
-  footnotes <- purrr::discard(footnotes, is.null)
-  attr(data, "footnotes") <- footnotes
+  attr(data, "footnotes") <- value
 
   data
 

@@ -12,23 +12,48 @@ xlsx_write_data <- function(
   collapse_list = FALSE,
   names_separator = "__",
   row_group_as_column = FALSE,
+  include_table_list = FALSE,
   facade = get_tsg_facade()
 ) {
 
   facade <- resolve_facade(facade, attributes(data)$facade)
 
+  table_hidden <- FALSE %||% facade$table.hidden
+
   openxlsx::addWorksheet(
     wb,
     sheetName = sheet_name,
     gridLines = facade$table.gridLines,
+    tabColour = facade$table.tabColour,
+    visible = !table_hidden,
     ...
   )
+
+  if(include_table_list) {
+
+    list_title <- 'List of Tables' %||% facade$label.titleTableList
+    back_label <- '< Back' %||% facade$label.backHyperlink
+
+    openxlsx::writeFormula(
+      wb = wb,
+      sheet = sheet_name,
+      startCol = 1,
+      startRow = 1,
+      x = openxlsx::makeHyperlinkString(
+        sheet = list_title,
+        text = back_label
+      )
+    )
+
+    offset_row <- offset_row + 1
+
+  }
 
   start_col <- offset_col + 1
 
   title <- title %||% attributes(data)$title
   subtitle <- subtitle %||% attributes(data)$subtitle
-  footnotes <- footnotes %||% attributes(data)$footnotes
+  footnotes <- footnotes %||% attributes(data)$footnotes$text
   source_note <- resolve_source_note(data, source_note)
 
   groups <- attributes(data)$groups
@@ -319,7 +344,8 @@ xlsx_write_data <- function(
       for(i in seq_along(row_titles)) {
 
         row_title <- row_titles[i]
-        data_i <- data[[i]]
+        data_i <- data[[i]] |>
+          dplyr::select(-1)
 
         openxlsx::writeData(
           wb = wb,
@@ -328,6 +354,14 @@ xlsx_write_data <- function(
           startRow = offset_row_i + 1,
           startCol = start_col,
           colNames = FALSE
+        )
+
+        xlsx_eval_style(
+          wb = wb,
+          sheet_name = sheet_name,
+          style = extract_facade(facade, 'sub_group'),
+          rows = offset_row_i + 1,
+          cols = start_col
         )
 
         openxlsx::setRowHeights(
@@ -510,7 +544,7 @@ xlsx_write_data <- function(
           precision = extract_facade(facade, 'table', 'decimalPrecision')
         )
 
-        offset_row_i <- offset_row_i + nrow(data_i) + 3
+        offset_row_i <- offset_row_i + nrow(data_i)
 
         xlsx_colwidths(
           wb = wb,
