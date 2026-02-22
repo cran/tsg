@@ -593,34 +593,31 @@ remaining values grouped into “Others”.</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a>person_record <span class="sc">|&gt;</span></span>
 <span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a>  <span class="fu">generate_frequency</span>(</span>
 <span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a>    marital_status,</span>
-<span id="cb9-4"><a href="#cb9-4" tabindex="-1"></a>    <span class="co">#top_n = 3</span></span>
+<span id="cb9-4"><a href="#cb9-4" tabindex="-1"></a>    <span class="at">top_n =</span> <span class="dv">3</span></span>
 <span id="cb9-5"><a href="#cb9-5" tabindex="-1"></a>  )</span>
-<span id="cb9-6"><a href="#cb9-6" tabindex="-1"></a><span class="co">#&gt; # A tibble: 6 × 3</span></span>
+<span id="cb9-6"><a href="#cb9-6" tabindex="-1"></a><span class="co">#&gt; # A tibble: 5 × 3</span></span>
 <span id="cb9-7"><a href="#cb9-7" tabindex="-1"></a><span class="co">#&gt;   category                 frequency percent</span></span>
-<span id="cb9-8"><a href="#cb9-8" tabindex="-1"></a><span class="co">#&gt;   &lt;int+lbl&gt;                    &lt;int&gt;   &lt;dbl&gt;</span></span>
+<span id="cb9-8"><a href="#cb9-8" tabindex="-1"></a><span class="co">#&gt;   &lt;dbl+lbl&gt;                    &lt;int&gt;   &lt;dbl&gt;</span></span>
 <span id="cb9-9"><a href="#cb9-9" tabindex="-1"></a><span class="co">#&gt; 1 1 [Single/never married]      1544   52.9 </span></span>
 <span id="cb9-10"><a href="#cb9-10" tabindex="-1"></a><span class="co">#&gt; 2 2 [Married]                    769   26.4 </span></span>
 <span id="cb9-11"><a href="#cb9-11" tabindex="-1"></a><span class="co">#&gt; 3 3 [Common law/live-in]         424   14.5 </span></span>
-<span id="cb9-12"><a href="#cb9-12" tabindex="-1"></a><span class="co">#&gt; 4 4 [Widowed]                    138    4.73</span></span>
-<span id="cb9-13"><a href="#cb9-13" tabindex="-1"></a><span class="co">#&gt; 5 6 [Separated]                   43    1.47</span></span>
-<span id="cb9-14"><a href="#cb9-14" tabindex="-1"></a><span class="co">#&gt; 6 0 [Total]                     2918  100</span></span></code></pre></div>
+<span id="cb9-12"><a href="#cb9-12" tabindex="-1"></a><span class="co">#&gt; 4 9 [Others]                     181    6.20</span></span>
+<span id="cb9-13"><a href="#cb9-13" tabindex="-1"></a><span class="co">#&gt; 5 0 [Total]                     2918  100</span></span></code></pre></div>
 <p>If you want to show only the top-n values and exclude the rest, set
 <code>top_n_only = TRUE</code>.</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a>person_record <span class="sc">|&gt;</span></span>
 <span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a>  <span class="fu">generate_frequency</span>(</span>
 <span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a>    marital_status, </span>
-<span id="cb10-4"><a href="#cb10-4" tabindex="-1"></a>    <span class="co">#top_n = 3,</span></span>
-<span id="cb10-5"><a href="#cb10-5" tabindex="-1"></a>    <span class="co">#top_n_only = TRUE</span></span>
+<span id="cb10-4"><a href="#cb10-4" tabindex="-1"></a>    <span class="at">top_n =</span> <span class="dv">3</span>,</span>
+<span id="cb10-5"><a href="#cb10-5" tabindex="-1"></a>    <span class="at">top_n_only =</span> <span class="cn">TRUE</span></span>
 <span id="cb10-6"><a href="#cb10-6" tabindex="-1"></a>  )</span>
-<span id="cb10-7"><a href="#cb10-7" tabindex="-1"></a><span class="co">#&gt; # A tibble: 6 × 3</span></span>
+<span id="cb10-7"><a href="#cb10-7" tabindex="-1"></a><span class="co">#&gt; # A tibble: 4 × 3</span></span>
 <span id="cb10-8"><a href="#cb10-8" tabindex="-1"></a><span class="co">#&gt;   category                 frequency percent</span></span>
 <span id="cb10-9"><a href="#cb10-9" tabindex="-1"></a><span class="co">#&gt;   &lt;int+lbl&gt;                    &lt;int&gt;   &lt;dbl&gt;</span></span>
-<span id="cb10-10"><a href="#cb10-10" tabindex="-1"></a><span class="co">#&gt; 1 1 [Single/never married]      1544   52.9 </span></span>
-<span id="cb10-11"><a href="#cb10-11" tabindex="-1"></a><span class="co">#&gt; 2 2 [Married]                    769   26.4 </span></span>
-<span id="cb10-12"><a href="#cb10-12" tabindex="-1"></a><span class="co">#&gt; 3 3 [Common law/live-in]         424   14.5 </span></span>
-<span id="cb10-13"><a href="#cb10-13" tabindex="-1"></a><span class="co">#&gt; 4 4 [Widowed]                    138    4.73</span></span>
-<span id="cb10-14"><a href="#cb10-14" tabindex="-1"></a><span class="co">#&gt; 5 6 [Separated]                   43    1.47</span></span>
-<span id="cb10-15"><a href="#cb10-15" tabindex="-1"></a><span class="co">#&gt; 6 0 [Total]                     2918  100</span></span></code></pre></div>
+<span id="cb10-10"><a href="#cb10-10" tabindex="-1"></a><span class="co">#&gt; 1 1 [Single/never married]      1544    52.9</span></span>
+<span id="cb10-11"><a href="#cb10-11" tabindex="-1"></a><span class="co">#&gt; 2 2 [Married]                    769    26.4</span></span>
+<span id="cb10-12"><a href="#cb10-12" tabindex="-1"></a><span class="co">#&gt; 3 3 [Common law/live-in]         424    14.5</span></span>
+<span id="cb10-13"><a href="#cb10-13" tabindex="-1"></a><span class="co">#&gt; 4 0 [Total]                     2918   100</span></span></code></pre></div>
 </div>
 <div id="handling-missing-values" class="section level3">
 <h3>Handling missing values</h3>

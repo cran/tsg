@@ -50,15 +50,15 @@ person_record |>
 person_record |>
   generate_frequency(
     marital_status,
-    #top_n = 3
+    top_n = 3
   )
 
 ## -----------------------------------------------------------------------------
 person_record |>
   generate_frequency(
     marital_status, 
-    #top_n = 3,
-    #top_n_only = TRUE
+    top_n = 3,
+    top_n_only = TRUE
   )
 
 ## -----------------------------------------------------------------------------
