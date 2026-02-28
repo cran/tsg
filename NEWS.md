@@ -1,3 +1,7 @@
+# tsg 0.1.3
+
+* Fixed bugs when generating table using character labelled/factored variables.
+
 # tsg 0.1.2
 
 ## Features
@@ -8,6 +12,7 @@
 ## Bug fixes
 * Fixed issues when generating a cross tabulation with `NA` values
 
+
 # tsg 0.1.1
 
 ## Features
@@ -16,6 +21,7 @@
 
 ## Bug fixes
 * Fixed column type consistency when generating `top_n` frequencies.
+
 
 # tsg 0.1.0
 
